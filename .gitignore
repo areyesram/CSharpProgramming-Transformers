@@ -1,0 +1,11 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+*.suo
+*.user
+/packages
+/MetricResults
+/.vs/WMICollector/v15/Server/sqlite3
+**/bin
+**/obj
