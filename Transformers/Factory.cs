@@ -34,10 +34,15 @@ namespace areyesram
             if (_transformers.ContainsKey(name))
                 return _transformers[name];
             var entry = _registry.FirstOrDefault(o => o.Name.Equals(name));
-            var assembly = _assemblies.ContainsKey(entry.AssemblyName)
-                ? _assemblies[entry.AssemblyName]
-                : Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory,
+            Assembly assembly;
+            if (_assemblies.ContainsKey(entry.AssemblyName))
+                assembly = _assemblies[entry.AssemblyName];
+            else
+            {
+                assembly = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory,
                     Path.Combine("Filters", entry.AssemblyName)));
+                _assemblies[entry.AssemblyName] = assembly;
+            }
             _transformers[name] = assembly.CreateInstance(entry.ClassName) as ITransformer;
             return _transformers[name];
         }
